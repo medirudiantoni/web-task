@@ -1,0 +1,98 @@
+{{>head }}
+{{>navbar }}
+<div class="w-full min-h-screen py-24 sm:py-36 px-5">
+    <div class="w-full max-w-3xl mx-auto">
+        <div class="w-full h-fit flex flex-col-reverse sm:flex-row items-stretch justify-between mb-10">
+            <div class="flex items-start sm:items-center gap-2 sm:gap-8 mt-4 sm:mb-0">
+                <a href="/" class="py-4 px-6 w-fit h-full rounded-2xl bg-slate-800 hover:bg-slate-700 active:bg-slate-950 active:scale-95 duration-75">
+                    <i class="fa-solid fa-angle-left fa-2xl translate-y-0.5"></i>
+                </a>
+                <div class="flex-1 sm:w-fit h-fit py-2 pl-5 pr-3 rounded-2xl bg-slate-800 flex items-center justify-between md:gap-20">
+                    <div>
+                        <form action="/collections/{{ id }}" method="post" class="w-fit box-border">
+                        {{!-- <form id="collection_name"> --}}
+                            <input name="name" type="text" style="width: fit-content;" autocomplete="off" spellcheck="false" class="box-border w-auto max-w-fit sm:w-fit h-fit bg-inherit text-lg font-semibold outline-none" value="{{ collection.name }}">
+                        </form>
+                        <p class="text-neutral-500 font-semibold text-sm">{{ trueLength }}/{{ resultLength }}</p>
+                    </div>
+                    <div class="hidden sm:block">
+                        <i class="fa-solid fa-clock fa-2xl" style="color: #a855f7"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-end w-full sm:w-fit">
+                <button onclick="isDelete('/collections-delete/{{ id }}')" class="py-2 px-6 rounded-full bg-red-900 hover:bg-red-800 active:bg-red-950 active:scale-95 duration-75">Delete</button>
+            </div>
+        </div>
+        <div class="w-full h-fit mb-5">
+            <form action="/task/{{ id }}" method="post" class="w-full h-fit relative flex items-center">
+                <div class="absolute left-1 h-4/5 aspect-square rounded-xl bg-purple-600 text-white flex items-center justify-center">
+                    <i class="fa-solid fa-plus fa-xl translate-y-0.5"></i>
+                </div>
+                <input name="name" type="text" autocomplete="off" spellcheck="false" class="py-2 px-4 pl-12 w-full rounded-2xl border-2 border-neutral-600 bg-inherit">
+                <input type="hidden" name="collection_id" value="{{ id }}">
+            </form>
+        </div>
+        <div class="w-full h-fit">
+            <div class="w-full mb-10">
+                <h2 class="text-xl font-semibold mb-2">Task - {{ falseLength }}</h2>
+                {{#each tasksFalse }}
+                <div class="w-full flex items-center gap-1">
+                    <div class="flex-1">
+                        <form action="/task-done" method="post">
+                            <button class="w-full h-fit rounded-2xl mb-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900 active:scale-[0.98] duration-75">
+                            <label class="w-full h-fit p-3 pl-6 pr-4 flex items-center justify-between">
+                                <p class="text-lg font-medium">{{ name }}</p>
+                                <input name="is_done" value="true" type="checkbox" class="hidden peer">
+                                <input name="task_id" type="hidden" value="{{ id }}">
+                                <input name="collection_id" type="hidden" value="{{ ../collection_id }}">
+                                <div class="w-8 aspect-square border-4 border-purple-700 rounded-xl bg-slate-800 peer-checked:bg-purple-700 text-slate-800 peer-checked:text-white flex items-center justify-center">
+                                    <i class="fa-solid fa-check fa-lg"></i>
+                                </div>
+                            </label>
+                            </button>
+                        </form>
+                    </div>
+                    <form action="/task-delete" method="post" class="self-stretch mb-2">
+                        <input type="hidden" name="id" value="{{ id }}">
+                        <input type="hidden" name="collection_id" value="{{ ../collection_id }}">
+                        <button class="w-fit h-full rounded-2xl px-4 py-2 flex items-center justify-center bg-red-800 hover:bg-red-900 active:bg-red-950 active:scale-[0.99] duration-75">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+                {{/each }}
+            </div>
+            <div class="w-full mb-10">
+                <h2 class="text-xl font-semibold mb-2">Complete - {{ trueLength }}</h2>
+                {{#each tasksTrue }}
+                <div class="w-full flex items-center gap-1">
+                    <div class="flex-1">
+                        <form action="/task-done" method="post">
+                            <button class="w-full h-fit rounded-2xl mb-2 bg-slate-800 hover:bg-slate-700 active:bg-slate-900 active:scale-[0.98] duration-75">
+                            <label class="w-full h-fit p-3 pl-6 pr-4 flex items-center justify-between">
+                                <p class="text-lg font-medium">{{ name }}</p>
+                                <input name="is_done" value="false" type="checkbox" class="hidden peer" checked>
+                                <input name="task_id" type="hidden" value="{{ id }}">
+                                <input name="collection_id" type="hidden" value="{{ ../collection_id }}">
+                                <div class="w-8 aspect-square border-4 border-purple-700 rounded-xl bg-slate-800 peer-checked:bg-purple-700 text-slate-800 peer-checked:text-white flex items-center justify-center">
+                                    <i class="fa-solid fa-check fa-lg"></i>
+                                </div>
+                            </label>
+                            </button>
+                        </form>
+                    </div>
+                    <form action="/task-delete" method="post" class="self-stretch mb-2">
+                        <input type="hidden" name="id" value="{{ id }}">
+                        <input type="hidden" name="collection_id" value="{{ ../collection_id }}">
+                        <button class="w-fit h-full rounded-2xl px-4 py-2 flex items-center justify-center bg-red-800 hover:bg-red-900 active:bg-red-950 active:scale-[0.99] duration-75">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                </div>
+                {{/each }}
+            </div>
+        </div>
+    </div>
+</div>
+{{>foot }}

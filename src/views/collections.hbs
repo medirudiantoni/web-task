@@ -1,0 +1,36 @@
+{{>head }}
+{{>navbar }}
+<div class="w-full max-w-3xl mx-auto min-h-screen py-32 px-5">
+    <div class="w-full h-fit">
+        <h1 class="text-2xl font-bold mb-10">Collections</h1>
+        <div class="w-full h-fit grid grid-cols-2 sm:grid-cols-3 gap-4 sm:gap-6 md:gap-8 lg:gap-12 xl:gap-16">
+            
+            {{#each data }}
+            <a href="/collections/{{ id }}" class="text-start col-span-1 aspect-square rounded-2xl bg-slate-800 hover:bg-slate-700 active:bg-slate-900 active:scale-95 duration-75 group p-5 flex flex-col justify-between">
+                <div class="w-10 aspect-square rounded-full bg-slate-700 group-hover:bg-slate-600 flex items-center justify-center">
+                    <i class="fa-regular fa-file fa-xl"></i>
+                </div>
+                <div class="w-full h-fit flex justify-between items-center">
+                    <div class="flex-1 h-fit">
+                        <h3 class="font-semibold text-xl">{{ name }}</h3>
+                        <p class="text-neutral-500">{{ task_true }}/{{ _count.task_tb }} done</p>
+                    </div>
+                    <div class="w-fit h-fit">
+                        <i class="fa-solid fa-clock fa-xl" style="color: #a855f7"></i>
+                    </div>
+                </div>
+            </a>
+            {{/each }}
+
+            <form action="/collections" method="post">
+                <input type="hidden" name="user_id" value="{{ session.user.id }}">
+                <button class="col-span-1 w-full h-full aspect-square rounded-2xl border-4 border-slate-800 p-5 flex flex-col items-center justify-center text-slate-700 hover:border-slate-600 hover:text-slate-500 active:scale-95 duration-75">
+                    <i class="fa-solid fa-plus fa-2xl"></i>
+                </button>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+{{>foot }}
