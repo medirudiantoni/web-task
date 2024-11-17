@@ -9,8 +9,8 @@
                 </a>
                 <div class="flex-1 sm:w-fit h-fit py-2 pl-5 pr-3 rounded-2xl bg-slate-800 flex items-center justify-between md:gap-20">
                     <div>
-                        <form action="/collections/{{ id }}" method="post" class="w-fit box-border">
-                        {{!-- <form id="collection_name"> --}}
+                        {{!-- <form action="/collections/{{ id }}" method="post" class="w-fit box-border"> --}}
+                        <form id="collection_name" data-id="{{ id }}">
                             <input name="name" type="text" style="width: fit-content;" autocomplete="off" spellcheck="false" class="box-border w-auto max-w-fit sm:w-fit h-fit bg-inherit text-lg font-semibold outline-none" value="{{ collection.name }}">
                         </form>
                         <p class="text-neutral-500 font-semibold text-sm">{{ trueLength }}/{{ resultLength }}</p>
@@ -95,4 +95,5 @@
         </div>
     </div>
 </div>
+<script src="/javascript/task.js"></script>
 {{>foot }}

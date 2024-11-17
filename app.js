@@ -3,15 +3,11 @@ const app = express();
 const path = require("path");
 const hbs = require("hbs");
 const port = 4000;
-const config = require('./config/config.json');
 const bcrypt = require('bcrypt');
 const flash = require('express-flash');
-const { Sequelize, QueryTypes } = require("sequelize");
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 const session = require('express-session');
-
-const sequelize = new Sequelize(config.development);
 
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "src", "views"));
@@ -169,6 +165,26 @@ app.post('/collections/:id', async (req, res) => {
         res.redirect('/')
     }
 });
+app.post('/collections/api/:id', async (req, res) => {
+    const { id } = req.params;
+    const { name } = req.body;
+    try {
+        await prisma.collections_tb.update({
+            where: { id: parseInt(id) },
+            data: {
+                name,
+            }
+        });
+        console.log('update collections success')
+        res.status(201).json({
+            message: 'Update name success'
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: 'Server error'
+        })
+    }
+});
 app.get('/collections/:id', async (req, res) => {
     const { id } = req.params;
     try {
@@ -248,7 +264,5 @@ app.post('/task-delete', async (req, res) => {
         res.redirect(`/collections/${collection_id}`)
     }
 });
-
-
 
 app.listen(port, () => console.log(`Running on port: ${port}`));
